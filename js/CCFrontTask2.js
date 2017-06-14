@@ -1,7 +1,6 @@
 const damage = spellString => {
     
-    let temp = spellString.toLowerCase();
-    const spells = {
+    const spellPoints = {
         'fe': 1,
         'je': 2,
         'jee': 3,
@@ -10,25 +9,42 @@ const damage = spellString => {
         'ne': 2,
         'ai': 2
     };
-    let validSpell = '';
-    let points = 0;
+    let temp = spellString.toLowerCase(),
+        validSpell = '',
+        validSpellNoPointedLetters,
+        pointedLettersCount = 0,
+        damage = 0;
     
     if (typeof spellString != 'string') {
-        return points;
+        return damage;
     }
     
     if (temp.indexOf('fe') == -1 || temp.indexOf('fe') != temp.lastIndexOf('fe')) {
-        return points;
-    } else if (temp.match(/fe/g).length == 1) {
+        return damage;
+    } else {
         let startFe = temp.substr(temp.indexOf('fe'));
-        if (startFe.indexOf('ai') >= 0) {
+        pointedLettersCount += 2;
+        damage += spellPoints.fe; // 1
+        if (startFe.indexOf('ai')) {
             validSpell = startFe.substr(0, startFe.lastIndexOf('ai') + 2);
+            validSpellNoPointedLetters = validSpell.substr(2);
         }
     }
     
+    if (validSpell.charAt(validSpell.length - 3) == 'd') {
+        pointedLettersCount += 3;
+        damage += spellPoints.dai; // 5
+        validSpellNoPointedLetters = validSpellNoPointedLetters.substr(0, validSpellNoPointedLetters.length - 3);
+    } else {
+        pointedLettersCount += 2;
+        damage += spellPoints.ai; // 2
+        validSpellNoPointedLetters = validSpellNoPointedLetters.substr(0, validSpellNoPointedLetters.length - 2);
+    }
+    
     console.log(validSpell);
+    console.log(validSpellNoPointedLetters);
     console.log(spellString);
-    return points;
+    return damage;
 }
 
 export {damage}
