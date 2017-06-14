@@ -13,38 +13,97 @@ const damage = spellString => {
         validSpell = '',
         validSpellNoPointedLetters,
         pointedLettersCount = 0,
-        damage = 0;
+        points = 0;
     
     if (typeof spellString != 'string') {
-        return damage;
+        return points;
     }
     
     if (temp.indexOf('fe') == -1 || temp.indexOf('fe') != temp.lastIndexOf('fe')) {
-        return damage;
+        return points;
     } else {
         let startFe = temp.substr(temp.indexOf('fe'));
         pointedLettersCount += 2;
-        damage += spellPoints.fe; // 1
+        points += spellPoints.fe; // 1
         if (startFe.indexOf('ai')) {
             validSpell = startFe.substr(0, startFe.lastIndexOf('ai') + 2);
             validSpellNoPointedLetters = validSpell.substr(2);
         }
     }
     
-    if (validSpell.charAt(validSpell.length - 3) == 'd') {
-        pointedLettersCount += 3;
-        damage += spellPoints.dai; // 5
-        validSpellNoPointedLetters = validSpellNoPointedLetters.substr(0, validSpellNoPointedLetters.length - 3);
-    } else {
-        pointedLettersCount += 2;
-        damage += spellPoints.ai; // 2
-        validSpellNoPointedLetters = validSpellNoPointedLetters.substr(0, validSpellNoPointedLetters.length - 2);
+//    console.log(validSpell);
+//    console.log(validSpellNoPointedLetters);
+    
+    if (validSpellNoPointedLetters.indexOf('dai') != -1) {
+        const daiCount = validSpellNoPointedLetters.match(/dai/g).length;
+        for (let i = 0; i < daiCount; i++) {
+            pointedLettersCount += 3;
+            points += spellPoints.dai; // 5
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('dai').join('');
+        }
     }
     
-    console.log(validSpell);
-    console.log(validSpellNoPointedLetters);
-    console.log(spellString);
-    return damage;
+//    console.log(validSpellNoPointedLetters);
+    
+    if (validSpellNoPointedLetters.indexOf('ain') != -1) {
+        const ainCount = validSpellNoPointedLetters.match(/ain/g).length;
+        for (let i = 0; i < ainCount; i++) {
+            pointedLettersCount += 3;
+            points += spellPoints.ain; // 3
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('ain').join('');
+        }
+    }
+    
+//    console.log(validSpellNoPointedLetters);
+    
+    if (validSpellNoPointedLetters.indexOf('jee') != -1) {
+        const jeeCount = validSpellNoPointedLetters.match(/jee/g).length;
+        for (let i = 0; i < jeeCount; i++) {
+            pointedLettersCount += 3;
+            points += spellPoints.jee; // 3
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('jee').join('');
+        }
+    }
+    
+//    console.log(validSpellNoPointedLetters);
+    
+    if (validSpellNoPointedLetters.indexOf('je') != -1) {
+        const jeCount = validSpellNoPointedLetters.match(/je/g).length;
+        for (let i = 0; i < jeCount; i++) {
+            pointedLettersCount += 2;
+            points += spellPoints.je; // 2
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('je').join('');
+        }
+    }
+    
+//    console.log(validSpellNoPointedLetters);
+    
+    if (validSpellNoPointedLetters.indexOf('ai') != -1) {
+        const aiCount = validSpellNoPointedLetters.match(/ai/g).length;
+        for (let i = 0; i < aiCount; i++) {
+            pointedLettersCount += 2;
+            points += spellPoints.ai; // 2
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('ai').join('');
+        }
+    }
+    
+//    console.log(validSpellNoPointedLetters);
+    
+    if (validSpellNoPointedLetters.indexOf('ne') != -1) {
+        const neCount = validSpellNoPointedLetters.match(/ne/g).length;
+        for (let i = 0; i < neCount; i++) {
+            pointedLettersCount += 2;
+            points += spellPoints.ne; // 2
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('ne').join('');
+        }
+    }
+    
+//    console.log(validSpellNoPointedLetters);
+    
+    points -= validSpell.length - pointedLettersCount;
+    points = points < 0 ? 0 : points;
+//    console.log(points);
+    return points;
 }
 
 export {damage}
