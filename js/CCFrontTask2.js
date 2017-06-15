@@ -45,34 +45,24 @@ const damage = spellString => {
     
 //    console.log(validSpellNoPointedLetters);
     
+    if (validSpellNoPointedLetters.indexOf('aine') != -1) {
+        const aineCount = validSpellNoPointedLetters.match(/aine/g).length;
+        for (let i = 0; i < aineCount; i++) {
+            pointedLettersCount += 4;
+            points += spellPoints.ai; // 2
+            points += spellPoints.ne; // 2
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('aine').join('');
+        }
+    }
+    
+//    console.log(validSpellNoPointedLetters);
+    
     if (validSpellNoPointedLetters.indexOf('ain') != -1) {
         const ainCount = validSpellNoPointedLetters.match(/ain/g).length;
         for (let i = 0; i < ainCount; i++) {
             pointedLettersCount += 3;
             points += spellPoints.ain; // 3
             validSpellNoPointedLetters = validSpellNoPointedLetters.split('ain').join('');
-        }
-    }
-    
-//    console.log(validSpellNoPointedLetters);
-    
-    if (validSpellNoPointedLetters.indexOf('jee') != -1) {
-        const jeeCount = validSpellNoPointedLetters.match(/jee/g).length;
-        for (let i = 0; i < jeeCount; i++) {
-            pointedLettersCount += 3;
-            points += spellPoints.jee; // 3
-            validSpellNoPointedLetters = validSpellNoPointedLetters.split('jee').join('');
-        }
-    }
-    
-//    console.log(validSpellNoPointedLetters);
-    
-    if (validSpellNoPointedLetters.indexOf('je') != -1) {
-        const jeCount = validSpellNoPointedLetters.match(/je/g).length;
-        for (let i = 0; i < jeCount; i++) {
-            pointedLettersCount += 2;
-            points += spellPoints.je; // 2
-            validSpellNoPointedLetters = validSpellNoPointedLetters.split('je').join('');
         }
     }
     
@@ -95,6 +85,28 @@ const damage = spellString => {
             pointedLettersCount += 2;
             points += spellPoints.ne; // 2
             validSpellNoPointedLetters = validSpellNoPointedLetters.split('ne').join('');
+        }
+    }
+    
+//    console.log(validSpellNoPointedLetters);
+    
+    if (validSpellNoPointedLetters.indexOf('jee') != -1) {
+        const jeeCount = validSpellNoPointedLetters.match(/jee/g).length;
+        for (let i = 0; i < jeeCount; i++) {
+            pointedLettersCount += 3;
+            points += spellPoints.jee; // 3
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('jee').join('');
+        }
+    }
+    
+//    console.log(validSpellNoPointedLetters);
+    
+    if (validSpellNoPointedLetters.indexOf('je') != -1) {
+        const jeCount = validSpellNoPointedLetters.match(/je/g).length;
+        for (let i = 0; i < jeCount; i++) {
+            pointedLettersCount += 2;
+            points += spellPoints.je; // 2
+            validSpellNoPointedLetters = validSpellNoPointedLetters.split('je').join('');
         }
     }
     
