@@ -1,176 +1,98 @@
-//const damage = spellString => {
-//    
-//    const spellPoints = {
-//        'fe': 1,
-//        'je': 2,
-//        'jee': 3,
-//        'ain': 3,
-//        'dai': 5,
-//        'ne': 2,
-//        'ai': 2
-//    };
-//    let temp = spellString.toLowerCase(),
-//        validSpell = '',
-//        validSpellNoPointedLetters = '',
-//        pointedLettersCount = 0,
-//        points = 0;
-//    
-//    if (typeof spellString != 'string') {
-//        return points;
-//    }
-//    
-//    if (temp.indexOf('fe') == -1 || temp.indexOf('fe') != temp.lastIndexOf('fe')) {
-//        return points;
-//    } else {
-//        let startFe = temp.substr(temp.indexOf('fe'));
-//        pointedLettersCount += 2;
-//        points += spellPoints.fe; // 1
-//        if (startFe.indexOf('ai')) {
-//            validSpell = startFe.substr(0, startFe.lastIndexOf('ai') + 2);
-//            validSpellNoPointedLetters = validSpell.substr(2);
-//        }
-//    }
-//    
-////    console.log(validSpell);
-////    console.log(validSpellNoPointedLetters);
-//    
-//    if (validSpellNoPointedLetters.indexOf('dai') != -1) {
-//        const daiCount = validSpellNoPointedLetters.match(/dai/g).length;
-//        for (let i = 0; i < daiCount; i++) {
-//            pointedLettersCount += 3;
-//            points += spellPoints.dai; // 5
-//            validSpellNoPointedLetters = validSpellNoPointedLetters.split('dai').join('');
-//        }
-//    }
-//    
-////    console.log(validSpellNoPointedLetters);
-//    
-//    if (validSpellNoPointedLetters.indexOf('aine') != -1) {
-//        const aineCount = validSpellNoPointedLetters.match(/aine/g).length;
-//        for (let i = 0; i < aineCount; i++) {
-//            pointedLettersCount += 4;
-//            points += spellPoints.ai; // 2
-//            points += spellPoints.ne; // 2
-//            validSpellNoPointedLetters = validSpellNoPointedLetters.split('aine').join('');
-//        }
-//    }
-//    
-////    console.log(validSpellNoPointedLetters);
-//    
-//    if (validSpellNoPointedLetters.indexOf('ain') != -1) {
-//        const ainCount = validSpellNoPointedLetters.match(/ain/g).length;
-//        for (let i = 0; i < ainCount; i++) {
-//            pointedLettersCount += 3;
-//            points += spellPoints.ain; // 3
-//            validSpellNoPointedLetters = validSpellNoPointedLetters.split('ain').join('');
-//        }
-//    }
-//    
-////    console.log(validSpellNoPointedLetters);
-//    
-//    if (validSpellNoPointedLetters.indexOf('ai') != -1) {
-//        const aiCount = validSpellNoPointedLetters.match(/ai/g).length;
-//        for (let i = 0; i < aiCount; i++) {
-//            pointedLettersCount += 2;
-//            points += spellPoints.ai; // 2
-//            validSpellNoPointedLetters = validSpellNoPointedLetters.split('ai').join('');
-//        }
-//    }
-//    
-////    console.log(validSpellNoPointedLetters);
-//    
-//    if (validSpellNoPointedLetters.indexOf('ne') != -1) {
-//        const neCount = validSpellNoPointedLetters.match(/ne/g).length;
-//        for (let i = 0; i < neCount; i++) {
-//            pointedLettersCount += 2;
-//            points += spellPoints.ne; // 2
-//            validSpellNoPointedLetters = validSpellNoPointedLetters.split('ne').join('');
-//        }
-//    }
-//    
-////    console.log(validSpellNoPointedLetters);
-//    
-//    if (validSpellNoPointedLetters.indexOf('jee') != -1) {
-//        const jeeCount = validSpellNoPointedLetters.match(/jee/g).length;
-//        for (let i = 0; i < jeeCount; i++) {
-//            pointedLettersCount += 3;
-//            points += spellPoints.jee; // 3
-//            validSpellNoPointedLetters = validSpellNoPointedLetters.split('jee').join('');
-//        }
-//    }
-//    
-////    console.log(validSpellNoPointedLetters);
-//    
-//    if (validSpellNoPointedLetters.indexOf('je') != -1) {
-//        const jeCount = validSpellNoPointedLetters.match(/je/g).length;
-//        for (let i = 0; i < jeCount; i++) {
-//            pointedLettersCount += 2;
-//            points += spellPoints.je; // 2
-//            validSpellNoPointedLetters = validSpellNoPointedLetters.split('je').join('');
-//        }
-//    }
-//    
-////    console.log(validSpellNoPointedLetters);
-//    
-//    points -= validSpell.length - pointedLettersCount;
-//    points = points < 0 ? 0 : points;
-////    console.log(points);
-//    return points;
-//}
-//
-//export {damage}
-
-function score(s) {
-  if(s.length === 0) {
-    return 0;
-  }
-  
-  if (s.substring(0, 2) === 'fe') {
-    return score(s.slice(2)) + 1;
-  }
-  
-  if (s.substring(0, 3) === 'jee' || s.substring(0, 3) === 'ain') {
-    const score1 = score(s.slice(3)) + 3;
-    const score2 = score(s.slice(2)) + 2;
-    return Math.max(score1, score2);
-  }
-  
-  if (s.substring(0, 2) === 'je' || s.substring(0, 2) === 'ai' || s.substring(0, 2) === 'ne') {
-    return score(s.slice(2)) + 2;
-  }
-  
-  if (s.substring(0, 3) === 'dai') {
-    return score(s.slice(3)) + 5;
-  }
-
-  // nothing matched, substract 1 and calculate rest of the score
-  return score(s.slice(1)) - 1;
+exports.damage = spellString => {
+    
+    if (typeof spellString !== 'string') {
+        return 0;
+    }
+    
+    const spellPoints = {
+        'fe': 1,
+        'je': 2,
+        'jee': 3,
+        'ain': 3,
+        'dai': 5,
+        'ne': 2,
+        'ai': 2
+    };
+    
+    let validSpell = '',
+        validSpellChunked = '',
+        points = 0;
+    
+    const indexOfFirstFe = spellString.indexOf('fe');
+    
+    if (indexOfFirstFe === -1 ||
+        indexOfFirstFe !== spellString.lastIndexOf('fe') ||
+        spellString.lastIndexOf('ai') < indexOfFirstFe) {
+        return 0;
+    }
+    
+    const startFe = spellString.substr(indexOfFirstFe);
+    points += spellPoints.fe;
+    
+    if (startFe.indexOf('ai')) {
+        validSpell = startFe.substr(0, startFe.lastIndexOf('ai') + 2);
+        validSpellChunked = validSpell.substr(2);
+    }
+    
+    if (validSpellChunked.indexOf('dai') !== -1) {
+        const daiCount = validSpellChunked.match(/dai/g).length;
+        for (let i = 0; i < daiCount; i++) {
+            points += spellPoints.dai;
+            validSpellChunked = validSpellChunked.split('dai').join('');
+        }
+    }
+    
+    if (validSpellChunked.indexOf('aine') !== -1) {
+        const aineCount = validSpellChunked.match(/aine/g).length;
+        for (let i = 0; i < aineCount; i++) {
+            points += spellPoints.ai;
+            points += spellPoints.ne;
+            validSpellChunked = validSpellChunked.split('aine').join('');
+        }
+    }
+    
+    if (validSpellChunked.indexOf('ain') !== -1) {
+        const ainCount = validSpellChunked.match(/ain/g).length;
+        for (let i = 0; i < ainCount; i++) {
+            points += spellPoints.ain;
+            validSpellChunked = validSpellChunked.split('ain').join('');
+        }
+    }
+    
+    if (validSpellChunked.indexOf('ai') !== -1) {
+        const aiCount = validSpellChunked.match(/ai/g).length;
+        for (let i = 0; i < aiCount; i++) {
+            points += spellPoints.ai;
+            validSpellChunked = validSpellChunked.split('ai').join('');
+        }
+    }
+    
+    if (validSpellChunked.indexOf('ne') !== -1) {
+        const neCount = validSpellChunked.match(/ne/g).length;
+        for (let i = 0; i < neCount; i++) {
+            points += spellPoints.ne;
+            validSpellChunked = validSpellChunked.split('ne').join('');
+        }
+    }
+    
+    if (validSpellChunked.indexOf('jee') !== -1) {
+        const jeeCount = validSpellChunked.match(/jee/g).length;
+        for (let i = 0; i < jeeCount; i++) {
+            points += spellPoints.jee;
+            validSpellChunked = validSpellChunked.split('jee').join('');
+        }
+    }
+    
+    if (validSpellChunked.indexOf('je') !== -1) {
+        const jeCount = validSpellChunked.match(/je/g).length;
+        for (let i = 0; i < jeCount; i++) {
+            points += spellPoints.je;
+            validSpellChunked = validSpellChunked.split('je').join('');
+        }
+    }
+        
+    points -= validSpellChunked.length;
+    points = points < 0 ? 0 : points;
+    
+    return points;
 }
-
-function damage(s) {
-  const beginning = s.indexOf('fe');
-  const end = s.lastIndexOf('ai');
-  // if 'fe' doesn't occure
-  //   or 'ai' end doesn't occure
-  //   or 'ai' is before first fe
-  // spell score is zero
-  if (beginning === -1 || end === -1 || beginning > end) {
-    return 0;
-  }
-  
-  // spell can have only one index of 'fe'
-  if (beginning !== s.lastIndexOf('fe')) {
-    return 0;
-  }
-  
-  const spell = s.slice(beginning, end + 2);
-  const finalScore = score(spell);
-  return (finalScore > 0) ? finalScore : 0;
-}
-
-console.log(damage('feeai'));
-console.log(damage('feaineain'));
-console.log(damage('jee'));
-console.log(damage('fefefefefeaiaiaiaiai'));
-console.log(damage('fdafafeajain'));
-console.log(damage('fexxxxxxxxxxai'));
